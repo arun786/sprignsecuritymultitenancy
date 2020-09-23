@@ -52,11 +52,3 @@ Page List from JPA
         }
     }
 
-
-## Test dependency
-
-
-        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.0'
-        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
-        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
-        testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.17.1'
