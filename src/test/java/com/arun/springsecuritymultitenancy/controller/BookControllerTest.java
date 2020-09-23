@@ -1,6 +1,8 @@
 package com.arun.springsecuritymultitenancy.controller;
 
+import com.arun.springsecuritymultitenancy.model.Book;
 import com.arun.springsecuritymultitenancy.service.BookService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,8 +29,9 @@ class BookControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private BookService bookService;
@@ -57,11 +62,30 @@ class BookControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * For post method, for Security, with csrf is required
+     *
+     * @throws Exception
+     */
     @Test
-    void saveBook() {
+    void saveBook() throws Exception {
+        Book book = new Book().setBookName("abc");
+        String bookJson = objectMapper.writeValueAsString(book);
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/book")
+                .with(csrf())
+                .with(httpBasic("user", "password"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(bookJson)).andExpect(status().isCreated());
     }
 
     @Test
-    void updateBook() {
+    void updateBook() throws Exception {
+        Book book = new Book().setBookName("abc");
+        String bookJson = objectMapper.writeValueAsString(book);
+        mockMvc.perform(MockMvcRequestBuilders.put("/v1/book/" + 1)
+                .with(csrf())
+                .with(httpBasic("user", "password"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(bookJson)).andExpect(status().isAccepted());
     }
 }
