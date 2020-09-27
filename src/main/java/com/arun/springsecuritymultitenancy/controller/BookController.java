@@ -37,6 +37,6 @@ public class BookController {
     @PutMapping("/v1/book/{id}")
     public ResponseEntity<HttpStatus> updateBook(@PathVariable Long id, @RequestBody Book book) {
         bookService.updateBook(id, book);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 
 /**
  * @author arun on 9/23/20
@@ -23,8 +23,8 @@ public class BookDomain {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer version;
-    private OffsetDateTime createdDate;
-    private OffsetDateTime lastModifiedDate;
+    private Timestamp createdDate;
+    private Timestamp lastModifiedDate;
     private String bookName;
     private BigDecimal price;
     private Integer quantityOnHand;
