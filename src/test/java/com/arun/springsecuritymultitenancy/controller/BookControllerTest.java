@@ -86,6 +86,6 @@ class BookControllerTest {
                 .with(csrf())
                 .with(httpBasic("user", "password"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(bookJson)).andExpect(status().isAccepted());
+                .content(bookJson)).andExpect(status().isNoContent());
     }
 }

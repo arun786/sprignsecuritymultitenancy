@@ -28,25 +28,23 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBookById(Long id) {
         Optional<BookDomain> book = bookRepository.findById(id);
-        return book.map(bookMapper::BookDomainToBook).orElse(null);
 
+        return book.map(bookMapper::BookDomainToBook).orElse(null);
     }
 
     @Override
     public Book saveBook(Book book) {
         BookDomain bookDomain = bookMapper.bookToBookDomain(book);
         BookDomain save = bookRepository.save(bookDomain);
-        return bookMapper.BookDomainToBook(save);
 
+        return bookMapper.BookDomainToBook(save);
     }
 
     @Override
     public void updateBook(Long id, Book book) throws ChangeSetPersister.NotFoundException {
-
         bookRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
         book.setId(id);
         BookDomain bookDomain1 = bookMapper.bookToBookDomain(book);
         bookRepository.save(bookDomain1);
-
     }
 }

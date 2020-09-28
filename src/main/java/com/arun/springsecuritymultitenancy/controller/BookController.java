@@ -26,18 +26,21 @@ public class BookController {
     @GetMapping("/v1/book/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Book bookById = bookService.getBookById(id);
+
         return ResponseEntity.ok(bookById);
     }
 
     @PostMapping("/v1/book")
     public ResponseEntity<Book> saveBook(@RequestBody Book book) {
         Book book1 = bookService.saveBook(book);
+
         return new ResponseEntity<>(book1, HttpStatus.CREATED);
     }
 
     @PutMapping("/v1/book/{id}")
     public ResponseEntity<HttpStatus> updateBook(@PathVariable Long id, @RequestBody Book book) throws ChangeSetPersister.NotFoundException {
         bookService.updateBook(id, book);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
