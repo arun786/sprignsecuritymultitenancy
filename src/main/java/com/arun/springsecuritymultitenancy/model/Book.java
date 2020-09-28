@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 /**
  * @author arun on 9/23/20
@@ -16,10 +15,11 @@ import java.util.UUID;
 @Setter
 public class Book {
     private Long id;
-    private Integer version;
-    private OffsetDateTime createdDate;
-    private OffsetDateTime lastModifiedDate;
+    private String version;
+    private OffsetDateTime createdDate = OffsetDateTime.now();
+    private OffsetDateTime lastModifiedDate = OffsetDateTime.now();
     private String bookName;
     private BigDecimal price;
     private Integer quantityOnHand;
+    private String authorName;
 }

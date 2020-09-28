@@ -22,10 +22,11 @@ public class BookDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer version;
+    private String version;
     private Timestamp createdDate;
     private Timestamp lastModifiedDate;
     private String bookName;
     private BigDecimal price;
     private Integer quantityOnHand;
+    private String authorName;
 }
