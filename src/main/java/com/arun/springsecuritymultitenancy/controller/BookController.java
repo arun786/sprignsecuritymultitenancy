@@ -3,6 +3,7 @@ package com.arun.springsecuritymultitenancy.controller;
 import com.arun.springsecuritymultitenancy.model.Book;
 import com.arun.springsecuritymultitenancy.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class BookController {
     }
 
     @PutMapping("/v1/book/{id}")
-    public ResponseEntity<HttpStatus> updateBook(@PathVariable Long id, @RequestBody Book book) {
+    public ResponseEntity<HttpStatus> updateBook(@PathVariable Long id, @RequestBody Book book) throws ChangeSetPersister.NotFoundException {
         bookService.updateBook(id, book);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -5,6 +5,7 @@ import com.arun.springsecuritymultitenancy.mapper.BookMapper;
 import com.arun.springsecuritymultitenancy.model.Book;
 import com.arun.springsecuritymultitenancy.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -40,17 +41,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(Long id, Book book) {
+    public void updateBook(Long id, Book book) throws ChangeSetPersister.NotFoundException {
 
-        Optional<BookDomain> bookDomain = bookRepository.findById(id);
-        if (bookDomain.isPresent()) {
-            if (bookDomain.get().getBookName().equals(book.getBookName())) {
-                book.setId(id);
-                bookRepository.save(bookMapper.bookToBookDomain(book));
-            }
-        }
-
-        //TODO throw an exception if not found
+        bookRepository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        book.setId(id);
+        BookDomain bookDomain1 = bookMapper.bookToBookDomain(book);
+        bookRepository.save(bookDomain1);
 
     }
 }
